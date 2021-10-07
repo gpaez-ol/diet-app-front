@@ -10,10 +10,10 @@ export default function App() {
       <div>
         <AppBar />
         <Switch>
-          <Route path="/browse">
+          <Route path="/browse" exact>
             <Browse />
           </Route>
-          <Route path="/">
+          <Route path="/" exact>
             <Dashboard />
           </Route>
         </Switch>
