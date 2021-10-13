@@ -4,10 +4,10 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import HelpIcon from "@mui/icons-material/Help";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { AccountMenuProps } from "../../../App";
@@ -65,7 +65,7 @@ export default function AccountMenu(props: AccountMenuProps) {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <Avatar /> Profile
+          <Avatar /> General information
         </MenuItem>
         <MenuItem>
           <Avatar /> My account
@@ -73,15 +73,15 @@ export default function AccountMenu(props: AccountMenuProps) {
         <Divider />
         <MenuItem>
           <ListItemIcon>
-            <PersonAdd fontSize="small" />
+            <Settings fontSize="small" />
           </ListItemIcon>
-          Add another account
+          Preferences
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <HelpIcon fontSize="small" />
           </ListItemIcon>
-          Settings
+          Help
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
