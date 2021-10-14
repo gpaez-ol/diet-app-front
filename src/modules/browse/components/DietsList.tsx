@@ -1,8 +1,10 @@
 import { Container } from "@mui/material";
 import React, { useState, useEffect } from 'react';
+import Dialog from '@mui/material/Dialog';
 import DietCard from "./DietCard";
 import Slider from './Slider';
 import { DietsListProps } from "./Types";
+import CharacterCard from './CharacterCard';
 
  // Types
  export type Character = {
@@ -30,6 +32,16 @@ export default function DietsList(props: DietsListProps) {
 
 const [data, setData] = useState<Character[]>([]);
 
+const [isDialogOpen, setIsDialogOpen] = useState(false);
+const [activeCharacter, setActiveCharacter] = useState<Character>(
+  {} as Character
+);
+
+const handleDialogOpen = (character: Character) => {
+  setIsDialogOpen(true);
+  setActiveCharacter(character);
+};
+
 useEffect(() => {
   const getData = async () => {
     const data = await (
@@ -45,9 +57,12 @@ useEffect(() => {
   return (
     <Container>
       <h2>{props.categoryName}</h2>
+      <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
+        <CharacterCard character={activeCharacter} />
+      </Dialog>
       <Slider {...SliderProps}>
         {data.map(character => (
-          <div key={character.id} >
+          <div key={character.id} onClick={() => handleDialogOpen(character)}>
             <img src={character.img_url} alt='character' />
           </div>
         ))}
