@@ -1,10 +1,9 @@
 import { Container } from "@mui/material";
 import React, { useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
-import DietCard from "./DietCard";
 import Slider from './Slider';
-import { DietsListProps } from "./Types";
 import CharacterCard from './CharacterCard';
+import DietCategory from "./interfaces/DietCategory";
 
  // Types
  export type Character = {
@@ -20,7 +19,7 @@ import CharacterCard from './CharacterCard';
   status: string;
 };
 
-export default function DietsList(props: DietsListProps) {
+export default function DietsList(props: DietCategory) {
   const SliderProps = {
     zoomFactor: 30, // How much the image should zoom on hover in percent
     slideMargin: 10, // Margin on each side of slides
@@ -56,7 +55,7 @@ useEffect(() => {
   if (data.length < 1) return <div>Loading ...</div>;
   return (
     <Container>
-      <h2>{props.categoryName}</h2>
+      <h2>{props.name}</h2>
       <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
         <CharacterCard character={activeCharacter} />
       </Dialog>

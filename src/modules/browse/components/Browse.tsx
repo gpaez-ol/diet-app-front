@@ -2,13 +2,13 @@ import { Container } from "@mui/material";
 import React from "react";
 import DietPagination from "./DietPagination";
 import DietsList from "./DietsList";
-import { DietsListProps } from "./Types";
+import DietCategory from "./interfaces/DietCategory";
 
 export default function Browse() {
-  let dietCategories: DietsListProps[] = [
-    { categoryName: "Weight loss" },
-    { categoryName: "Muscle building" },
-    { categoryName: "Detox" },
+  let dietCategories: DietCategory[] = [
+    { name: "Weight loss" },
+    { name: "Muscle building" },
+    { name: "Detox" },
   ];
 
   return (
