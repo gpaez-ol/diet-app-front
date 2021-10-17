@@ -1,25 +1,11 @@
 import { Container } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import Slider from "./Slider";
-import CharacterCard from "./CharacterCard";
 import DietCategory from "./interfaces/DietCategory";
 import DietCard from "../../general/components/DietCard";
 import Diet from "../../general/interfaces/Diet";
-
-// Types
-export type Character = {
-  abilities: string[];
-  alias: string[];
-  gender: string;
-  hair: string;
-  id: number;
-  img_url: string;
-  name: string;
-  origin: string;
-  species: string;
-  status: string;
-};
+import DietInfoCard from "./DietInfoCard";
 
 export default function DietsList(props: DietCategory) {
   const SliderProps = {
@@ -29,53 +15,68 @@ export default function DietsList(props: DietCategory) {
     pageTransition: 500, // Transition when flipping pages
   };
 
-  const [data, setData] = useState<Character[]>([]);
-
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [activeCharacter, setActiveCharacter] = useState<Character>(
-    {} as Character
-  );
+  const [activeDiet, setActiveDiet] = useState<Diet>({} as Diet);
 
-  const handleDialogOpen = (character: Character) => {
+  const handleDialogOpen = (diet: Diet) => {
     setIsDialogOpen(true);
-    setActiveCharacter(character);
+    setActiveDiet(diet);
   };
 
-  useEffect(() => {
-    const getData = async () => {
-      const data = await (
-        await fetch("https://finalspaceapi.com/api/v0/character/")
-      ).json();
-      setData(data);
-    };
-
-    getData();
-  }, []);
-
-  if (data.length < 1) return <div>Loading ...</div>;
-
   const diets: Diet[] = [
-    { name: "diet1", description: "desc1" },
-    { name: "diet2", description: "desc1" },
-    { name: "diet3", description: "desc1" },
-    { name: "diet4", description: "desc1" },
-    { name: "diet5", description: "desc1" },
-    { name: "diet6", description: "desc1" },
-    { name: "diet7", description: "desc1" },
-    { name: "diet8", description: "desc1" },
-    { name: "diet9", description: "desc1" },
-    { name: "diet10", description: "desc1" },
+    {
+      name: "diet1",
+      description: "Some nice description for a diet. blah blah banana banana",
+    },
+    {
+      name: "diet2",
+      description: "Some nice description for a diet. blah blah banana banana",
+    },
+    {
+      name: "diet3",
+      description: "Some nice description for a diet. blah blah banana banana",
+    },
+    {
+      name: "diet4",
+      description: "Some nice description for a diet. blah blah banana banana",
+    },
+    {
+      name: "diet5",
+      description: "Some nice description for a diet. blah blah banana banana",
+    },
+    {
+      name: "diet6",
+      description: "Some nice description for a diet. blah blah banana banana",
+    },
+    {
+      name: "diet7",
+      description: "Some nice description for a diet. blah blah banana banana",
+    },
+    {
+      name: "diet8",
+      description: "Some nice description for a diet. blah blah banana banana",
+    },
+    {
+      name: "diet9",
+      description: "Some nice description for a diet. blah blah banana banana",
+    },
+    {
+      name: "diet10",
+      description: "Some nice description for a diet. blah blah banana banana",
+    },
   ];
 
   return (
     <Container>
       <h2>{props.name}</h2>
       <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
-        <CharacterCard character={activeCharacter} />
+        <DietInfoCard {...activeDiet} />
       </Dialog>
       <Slider {...SliderProps}>
         {diets.map((diet) => (
-          <DietCard {...diet} />
+          <div onClick={() => handleDialogOpen(diet)}>
+            <DietCard {...diet} />
+          </div>
         ))}
       </Slider>
     </Container>
