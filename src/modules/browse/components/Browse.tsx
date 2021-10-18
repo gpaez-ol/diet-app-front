@@ -12,7 +12,7 @@ export default function Browse() {
   ];
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <h1>Browse Diets</h1>
       {dietCategories.map((dietCategory) => {
         return <DietsList {...dietCategory} />;

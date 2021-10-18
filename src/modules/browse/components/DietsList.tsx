@@ -67,7 +67,7 @@ export default function DietsList(props: DietCategory) {
   ];
 
   return (
-    <Container>
+    <Container maxWidth="xl">
       <h2>{props.name}</h2>
       <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
         <DietInfoCard {...activeDiet} />
