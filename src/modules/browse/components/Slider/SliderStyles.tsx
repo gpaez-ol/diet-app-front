@@ -18,7 +18,7 @@ type SliderProps = {
 export const StyledSliderWrapper = styled.div<SliderWrapperProps>`
   overflow: hidden;
   position: relative;
-  background: #dee2e6;
+  background: #f8f8f8;
   padding: ${(props) => (props.zoomFactor / props.visibleSlides) * 0.7 + '%'} 0;
 
   .button-wrapper {
