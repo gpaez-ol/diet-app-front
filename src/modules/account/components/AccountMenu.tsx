@@ -10,9 +10,9 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { AccountMenuProps } from "../../../App";
+import { User } from "../../general/types/user";
 
-export default function AccountMenu(props: AccountMenuProps) {
+export default function AccountMenu(user: User) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -26,7 +26,7 @@ export default function AccountMenu(props: AccountMenuProps) {
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Account settings">
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-            <Avatar sx={{ width: 32, height: 32 }}>{props.user.name[0]}</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>{user.firstName[0]}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>

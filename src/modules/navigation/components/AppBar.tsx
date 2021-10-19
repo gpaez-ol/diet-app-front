@@ -6,6 +6,7 @@ import { NavTabs } from "./Tabs";
 import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
 import { User } from "../../general/types/user";
+import AccountMenu from "../../account/components/AccountMenu";
 
 function isUser(user: any): user is User {
   return user.avatar && user.firstName && user.lastName && user.type;
@@ -26,12 +27,7 @@ export default function CustomAppBar() {
   }, [setUser]);
 
   const handleOnLoginClick = () => {
-    if (user) {
-      // open account
-      alert("open account");
-    } else {
-      browserHistory.push("/login");
-    }
+    browserHistory.push("/login");
   };
 
   return (
@@ -39,9 +35,13 @@ export default function CustomAppBar() {
       <AppBar position="static" style={{ backgroundColor: "white" }}>
         <Toolbar>
           <NavTabs />
-          <Button color="primary" onClick={handleOnLoginClick}>
-            {user ? "Account" : "Login"}
-          </Button>
+          {user ? (
+            <AccountMenu {...user} />
+          ) : (
+            <Button color="primary" onClick={handleOnLoginClick}>
+              {user ? "Account" : "Login"}
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
