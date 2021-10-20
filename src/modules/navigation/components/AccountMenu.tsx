@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useHistory } from "react-router";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -21,6 +22,14 @@ export default function AccountMenu(user: User) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const browserHistory = useHistory();
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    browserHistory.push("/");
+    window.location.reload()
+  };
+
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -83,7 +92,7 @@ export default function AccountMenu(user: User) {
           </ListItemIcon>
           Help
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

@@ -6,7 +6,7 @@ import { NavTabs } from "./Tabs";
 import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
 import { User } from "../../general/types/user";
-import AccountMenu from "../../account/components/AccountMenu";
+import AccountMenu from "./AccountMenu";
 
 function isUser(user: any): user is User {
   return user.avatar && user.firstName && user.lastName && user.type;
