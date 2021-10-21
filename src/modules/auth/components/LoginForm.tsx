@@ -44,8 +44,8 @@ export default function LoginForm() {
   };
 
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent sx={{ boxSizing: "border-box" }}>
+    <Card>
+      <CardContent sx={{ boxSizing: "border-box", width: 450 }}>
         <div style={{ marginBottom: "16px" }}>
           <Typography color="text.primary" variant="h5" textAlign="center">
             Welcome to AlgoFit!
