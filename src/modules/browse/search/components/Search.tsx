@@ -6,18 +6,23 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Grid from "@mui/material/Grid";
+import SearchProps from "../interfaces/SearchProps";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function SearchBar() {
+export default function SearchBar(props: SearchProps) {
+  const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.handleSearchActivation(event.target.value.length > 0);
+  };
+
   return (
     <>
     <h2>Search for a Diet</h2>
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={7}>
-          <TextField fullWidth label="Diet name" color="primary" />
+          <TextField fullWidth label="Diet name" color="primary" onChange={handleNameInputChange} />
         </Grid>
         <Grid item xs={12} sm={5}>
           <Autocomplete

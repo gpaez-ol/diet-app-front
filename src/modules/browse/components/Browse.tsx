@@ -4,13 +4,19 @@ import Search from "../search/components/Search";
 import Explore from "../explore/components/Explore";
 
 export default function Browse() {
-  const [isSearchActive, setIsSeachActive] = useState(false);
+  const [isSearchActive, setIsSearchActive] = useState(false);
+
+  const handleSearchActivation = (searchStatus: boolean) => {
+    setIsSearchActive(searchStatus);
+  };
 
   return (
     <Container maxWidth="xl">
       <h1>Browse Diets</h1>
-      <Search />
-      <Explore />
+      <Search {...{handleSearchActivation}} />
+      {
+        !isSearchActive && <Explore />
+      }
     </Container>
   );
 }
