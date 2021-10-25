@@ -1,9 +1,9 @@
 import { Container, Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
-import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 
-export default function Login() {
+export default function Signup() {
   const browserHistory = useHistory();
 
   useEffect(() => {
@@ -25,13 +25,13 @@ export default function Login() {
           style={{ minHeight: "100vh" }}
         >
           <Grid item xs={3}>
-            <LoginForm />
+            <SignupForm />
             <div style={{ padding: 16 }}>
               <Typography textAlign="center">
-                Don't have an account yet?
+                Already have an account?
               </Typography>
               <Typography textAlign="center">
-                Sign up <a href="/signup">here</a>
+                Log in <a href="/login">here</a>
               </Typography>
             </div>
           </Grid>
