@@ -1,25 +1,16 @@
 import { Container } from "@mui/material";
-import React from "react";
-import DietPagination from "./DietPagination";
-import DietsList from "./DietsList";
-import DietCategory from "../types/DietCategory";
+import { useState } from "react";
 import Search from "../search/components/Search";
+import Explore from "../explore/components/Explore";
 
 export default function Browse() {
-  let dietCategories: DietCategory[] = [
-    { name: "Weight loss" },
-    { name: "Muscle building" },
-    { name: "Detox" },
-  ];
+  const [isSearchActive, setIsSeachActive] = useState(false);
 
   return (
     <Container maxWidth="xl">
       <h1>Browse Diets</h1>
       <Search />
-      {dietCategories.map((dietCategory) => {
-        return <DietsList {...dietCategory} />;
-      })}
-      <DietPagination />
+      <Explore />
     </Container>
   );
 }
