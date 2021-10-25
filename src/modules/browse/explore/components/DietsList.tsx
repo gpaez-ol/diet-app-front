@@ -2,9 +2,9 @@ import { Container } from "@mui/material";
 import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import Slider from "./Slider";
-import DietCategory from "../types/DietCategory";
-import DietCard from "../../general/components/DietCard";
-import Diet from "../../general/interfaces/Diet";
+import DietCategory from "../../types/DietCategory";
+import DietCard from "../../../general/components/DietCard";
+import Diet from "../../../general/interfaces/Diet";
 import DietInfoCard from "./DietInfoCard";
 
 export default function DietsList(props: DietCategory) {
