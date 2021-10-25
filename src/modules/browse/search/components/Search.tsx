@@ -12,6 +12,8 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function SearchBar() {
   return (
+    <>
+    <h2>Search for a Diet</h2>
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={7}>
@@ -46,6 +48,7 @@ export default function SearchBar() {
         </Grid>
       </Grid>
     </Box>
+    </>
   );
 }
 
