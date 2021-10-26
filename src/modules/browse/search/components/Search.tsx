@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SearchProps from "../interfaces/SearchProps";
 import DietCategory from "../../types/DietCategory";
 import SearchBar from "./SearchBar";
+import SearchResults from "./SearchResults";
 
 export default function Search(props: SearchProps) {
   const [dietNameSearch, setDietNameSearch] = useState<string>("");
@@ -29,6 +30,7 @@ export default function Search(props: SearchProps) {
     <>
       <h2>Search for a Diet</h2>
       <SearchBar {...{ updateDietNameSearch, updateDietCategoriesSearch }} />
+      <SearchResults {...{dietNameSearch, dietCategoriesSearch}} />
     </>
   );
 }
