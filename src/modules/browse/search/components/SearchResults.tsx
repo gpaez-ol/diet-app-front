@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
+import Dialog from "@mui/material/Dialog";
 import Grid from "@mui/material/Grid";
 import DietCard from "../../../general/components/DietCard";
 import Diet from "../../../general/interfaces/Diet";
+import DietInfoCard from "../../components/DietInfoCard";
 import SearchResultProps from "../interfaces/SearchResultProps";
 
 export default function SearchResults(props: SearchResultProps) {
@@ -49,10 +51,20 @@ export default function SearchResults(props: SearchResultProps) {
     },
   ];
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [activeDiet, setActiveDiet] = useState<Diet>({} as Diet);
+
+  const handleDialogOpen = (diet: Diet) => {
+    setIsDialogOpen(true);
+    setActiveDiet(diet);
+  };
+
   const [searchResults, setSearchResults] = useState<Diet[]>([]);
 
   useEffect(() => {
-    let result = diets.filter(diet => diet.name.includes(props.dietNameSearch));
+    let result = diets.filter((diet) =>
+      diet.name.includes(props.dietNameSearch)
+    );
     setSearchResults(result);
   }, [props.dietNameSearch, props.dietCategoriesSearch]);
 
@@ -62,13 +74,18 @@ export default function SearchResults(props: SearchResultProps) {
         You are searching for: {props.dietNameSearch} and categories:{" "}
         {props.dietCategoriesSearch.length}
       </p>
+      <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
+        <DietInfoCard {...activeDiet} />
+      </Dialog>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Box sx={{ flexGrow: 1 }}>
-          <Grid container >
+          <Grid container>
             {searchResults.map((diet) => {
               return (
                 <Grid item xs={12} sm={4} md={3}>
-                  <DietCard {...diet} />
+                  <div onClick={() => handleDialogOpen(diet)}>
+                    <DietCard {...diet} />
+                  </div>
                 </Grid>
               );
             })}
