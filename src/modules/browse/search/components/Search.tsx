@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
@@ -12,8 +12,14 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function SearchBar(props: SearchProps) {
+  const [dietNameSearch, setDietNameSearch] = useState<string>("");
+
+  useEffect(() => {
+    props.handleSearchActivation(dietNameSearch.length > 0);
+  });
+
   const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.handleSearchActivation(event.target.value.length > 0);
+    setDietNameSearch(event.target.value);
   };
 
   return (
