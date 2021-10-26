@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import DietCard from "../../../general/components/DietCard";
@@ -49,6 +49,13 @@ export default function SearchResults(props: SearchResultProps) {
     },
   ];
 
+  const [searchResults, setSearchResults] = useState<Diet[]>([]);
+
+  useEffect(() => {
+    let result = diets.filter(diet => diet.name.includes(props.dietNameSearch));
+    setSearchResults(result);
+  }, [props.dietNameSearch, props.dietCategoriesSearch]);
+
   return (
     <>
       <p>
@@ -58,7 +65,7 @@ export default function SearchResults(props: SearchResultProps) {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container >
-            {diets.map((diet) => {
+            {searchResults.map((diet) => {
               return (
                 <Grid item xs={12} sm={4} md={3}>
                   <DietCard {...diet} />

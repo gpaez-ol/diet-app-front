@@ -30,7 +30,9 @@ export default function Search(props: SearchProps) {
     <>
       <h2>Search for a Diet</h2>
       <SearchBar {...{ updateDietNameSearch, updateDietCategoriesSearch }} />
-      <SearchResults {...{dietNameSearch, dietCategoriesSearch}} />
+      {props.isSearchActive && (
+        <SearchResults {...{ dietNameSearch, dietCategoriesSearch }} />
+      )}
     </>
   );
 }

@@ -13,7 +13,7 @@ export default function Browse() {
   return (
     <Container maxWidth="xl">
       <h1>Browse Diets</h1>
-      <Search {...{handleSearchActivation}} />
+      <Search {...{isSearchActive, handleSearchActivation}} />
       {
         !isSearchActive && <Explore />
       }
