@@ -4,4 +4,6 @@ export const URLs = {
   login: baseUrl + "/login",
   biometric: baseUrl + "/biometric",
   signup: baseUrl + "/signup",
+  category: baseUrl + "/category",
+  diet: baseUrl + "/diet",
 };
