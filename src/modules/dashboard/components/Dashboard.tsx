@@ -1,5 +1,5 @@
 import { Container, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DietCard from '../../general/components/DietCard';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -46,19 +46,19 @@ export default function Dashboard() {
     {name: "nose4", description: "description"}
   ];
 
-  const getBiometrics = () => {
-    /*const requestOptions = {
+  useEffect(() => {
+    const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
     let userId = JSON.parse(localStorage.getItem("user")!).id;
 
-    fetch(`${URLs.biometric}/${userId}`, requestOptions)
+    fetch(`${URLs.biometric}/list/${userId}`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-    });*/
-  };
+    });
+  }, []);
 
   return (
     <Container maxWidth="lg" style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
@@ -122,7 +122,7 @@ export default function Dashboard() {
       <br/>
       <Button onClick={() => setAddBiometricOpen(true)}>Add Biometrics</Button>
       <Dialog onClose={() => setAddBiometricOpen(false)} open={addBiometricOpen}>
-        <AddBiometric/>
+        <AddBiometric close={() => setAddBiometricOpen(false)}/>
       </Dialog>
       <br/>
       <div style={{width: '50vw'}}>
