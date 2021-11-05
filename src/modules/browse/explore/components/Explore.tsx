@@ -12,7 +12,7 @@ export default function Browse() {
       .then((data) => {
         setDietCategories(data.pagination);
       });
-  }, [setDietCategories]);
+  }, []);
 
   return (
     <>

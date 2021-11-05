@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
@@ -8,11 +8,22 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Grid from "@mui/material/Grid";
 import SearchBarProps from "../interfaces/SearchBarProps";
 import DietCategory from "../../types/DietCategory";
+import { URLs } from "../../../general/utils/urls";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function SearchBar(props: SearchBarProps) {
+  const [dietCategories, setDietCategories] = useState<DietCategory[]>([]);
+
+  useEffect(() => {
+    fetch(URLs.category + "?Page=1&PageSize=100")
+      .then((response) => response.json())
+      .then((data) => {
+        setDietCategories(data.pagination);
+      });
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -58,9 +69,3 @@ export default function SearchBar(props: SearchBarProps) {
     </Box>
   );
 }
-
-let dietCategories: DietCategory[] = [
-  { name: "Weight loss" },
-  { name: "Muscle building" },
-  { name: "Detox" },
-];
