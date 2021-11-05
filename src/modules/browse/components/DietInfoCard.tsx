@@ -13,7 +13,7 @@ export default function MultiActionAreaCard(diet: Diet) {
         <CardMedia
           component="img"
           height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image={diet.imageRef}
           alt="green iguana"
         />
         <CardContent>
