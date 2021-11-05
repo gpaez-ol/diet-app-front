@@ -6,4 +6,5 @@ export const URLs = {
   signup: baseUrl + "/signup",
   category: baseUrl + "/category",
   diet: baseUrl + "/diet",
+  dashboard: baseUrl + "/dashboard",
 };
