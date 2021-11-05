@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -6,25 +7,44 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import { URLs } from "../../general/utils/urls";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
-export default function AddBiometric() {
+interface AddBiometricProps {
+  close: () => void
+}
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+export default function AddBiometric(props: AddBiometricProps) {
   const [weight, setWeight] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
   const [fatIndex, setFatIndex] = useState<number>(0);
+  const [errorOpen, setErrorOpen] = useState<boolean>(false);
 
   const addBiometric = () => {
-    /*const requestOptions = {
+    const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({weight, height, fatIndex}),
+      body: JSON.stringify({weight, height, fatIndex})
     };
     let userId = JSON.parse(localStorage.getItem("user")!).id;
 
     fetch(`${URLs.biometric}/${userId}`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-    });*/
+      .then((response) => {
+        console.log(response);
+        if(response.ok) {
+          props.close();
+        } else {
+          console.log("error");
+          setErrorOpen(true);
+        }
+      });
   };
 
   return (
@@ -43,7 +63,7 @@ export default function AddBiometric() {
           type="number"
           sx={{ width: "100%", marginBottom: "8px", boxSizing: "border-box" }}
           value={weight}
-          onChange={(e) => setWeight(parseInt(e.target.value))}
+          onChange={(e) => setWeight(parseInt(e.target.value || '0'))}
         />
         <TextField
           id="login-password-input"
@@ -53,7 +73,7 @@ export default function AddBiometric() {
           type="number"
           sx={{ width: "100%", marginBottom: "8px", boxSizing: "border-box" }}
           value={height}
-          onChange={(e) => setHeight(parseInt(e.target.value))}
+          onChange={(e) => setHeight(parseInt(e.target.value || '0'))}
         />
         <TextField
           id="login-password-input"
@@ -63,7 +83,7 @@ export default function AddBiometric() {
           type="number"
           sx={{ width: "100%", marginBottom: "8px", boxSizing: "border-box" }}
           value={fatIndex}
-          onChange={(e) => setFatIndex(parseInt(e.target.value))}
+          onChange={(e) => setFatIndex(parseInt(e.target.value || '0'))}
         />
       </CardContent>
       <CardActions
@@ -78,6 +98,15 @@ export default function AddBiometric() {
           Add
         </Button>
       </CardActions>
+      <Snackbar
+        open={errorOpen}
+        autoHideDuration={6000}
+        onClose={() => setErrorOpen(false)}
+      >
+        <Alert onClose={() => setErrorOpen(false)} severity="error" sx={{ width: '100%' }}>
+          Hubo un error :( Por favor intentalo de nuevo
+        </Alert>
+      </Snackbar>
     </Card>
   );
 }
