@@ -1,6 +1,7 @@
 import { Container, Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
+import { Routes } from "../../general/utils/routes";
 import LoginForm from "./LoginForm";
 
 export default function Login() {
@@ -9,7 +10,7 @@ export default function Login() {
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      browserHistory.push("/");
+      browserHistory.push(Routes.customerDashboard);
     }
   });
 
@@ -31,7 +32,7 @@ export default function Login() {
                 Don't have an account yet?
               </Typography>
               <Typography textAlign="center">
-                Sign up <a href="/signup">here</a>
+                Sign up <a href={Routes.signup}>here</a>
               </Typography>
             </div>
           </Grid>

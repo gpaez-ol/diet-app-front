@@ -12,6 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { User } from "../../general/types/user";
+import { Routes } from "../../general/utils/routes";
 
 export default function AccountMenu(user: User) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -26,7 +27,7 @@ export default function AccountMenu(user: User) {
   const browserHistory = useHistory();
   const handleLogout = () => {
     localStorage.removeItem("user");
-    browserHistory.push("/");
+    browserHistory.push(Routes.customerBrowse);
     window.location.reload()
   };
 

@@ -8,6 +8,7 @@ import { TextField } from "@mui/material";
 import { emailRegex } from "../utils/regex";
 import { URLs } from "../../general/utils/urls";
 import { useHistory } from "react-router";
+import { Routes } from "../../general/utils/routes";
 
 export default function SignupForm() {
   const [firstName, setFirstName] = useState<string | undefined>(undefined);
@@ -77,7 +78,11 @@ export default function SignupForm() {
           alert("Error. Usuario ya existe.");
         } else {
           localStorage.setItem("user", JSON.stringify(data));
-          browserHistory.push("/");
+          if (data.type === "Customer") {
+            browserHistory.push(Routes.customerDashboard);
+          } else {
+            browserHistory.push(Routes.adminConfigurator);
+          }
         }
       })
       .catch(() => {
