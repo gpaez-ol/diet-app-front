@@ -12,31 +12,41 @@ import { URLs } from "../../general/utils/urls";
 import Dialog from "@mui/material/Dialog";
 import AddBiometric from './AddBiometric';
 
-const data = {
-  labels: ['10/10/21', '11/10/21', '12/10/21', '13/10/21'],
-  datasets: [
-    {
-      label: 'Weight',
-      data: [85, 83, 81, 80],
-      backgroundColor: 'rgba(54, 162, 235, 0.2)',
-      borderWidth: 1,
-    },
-  ],
-};
-
-const options = {
-  scales: {
-    y: {
-      beginAtZero: false,
-      suggestedMin: 75,
-      suggestedMax: 90
-    }
-  }
+interface Biometric {
+  date: string;
+  height: number;
+  weight: number;
 }
 
 export default function Dashboard() {
 
   const [addBiometricOpen, setAddBiometricOpen] = useState(false);
+  const [lastestWeight, setLastestWeight] = useState(0);
+  const [lastestHeight, setLastestHeight] = useState(0);
+  const [lastestCaloriesConsumed, setLastestCaloriesConsumed] = useState(0);
+  const [lastestFatIndex, setLastestFatIndex] = useState(0);
+
+  const [data, setData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: 'Weight',
+        data: [],
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderWidth: 1,
+      },
+    ],
+  });
+
+  const [options, setOptions] = useState({
+    scales: {
+      y: {
+        beginAtZero: false,
+        suggestedMin: 0,
+        suggestedMax: 0
+      }
+    }
+  });
 
   let diets: Diet[] = [
     {name: "nose", description: "description"},
@@ -53,11 +63,38 @@ export default function Dashboard() {
     };
     let userId = JSON.parse(localStorage.getItem("user")!).id;
 
-    fetch(`${URLs.biometric}/list/${userId}`, requestOptions)
+    fetch(`${URLs.dashboard}/${userId}`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-    });
+        setLastestWeight(data.latestBiometrics.weight);
+        setLastestHeight(data.latestBiometrics.height);
+        setLastestCaloriesConsumed(data.latestBiometrics.caloriesConsumed);
+        setLastestFatIndex(data.latestBiometrics.fatIndex);
+        let dates = data.biometricHistory.map((bio: Biometric) => bio.date.substring(0, 10));
+        let weights = data.biometricHistory.map((bio: Biometric) => bio.weight);
+        setData({
+          labels: dates,
+          datasets: [
+            {
+              label: 'Weight',
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderWidth: 1,
+              data: weights
+            }
+          ]
+        });
+        setOptions({
+          scales: {
+            y: {
+              beginAtZero: false,
+              suggestedMin: Math.min(...weights) - 1,
+              suggestedMax: Math.max(...weights) + 1
+            }
+          }
+        })
+        console.log(options);
+      });
   }, []);
 
   return (
@@ -84,7 +121,7 @@ export default function Dashboard() {
               Latest Weight
             </Typography>
             <Typography variant="h5">
-              80 kg
+              {lastestWeight} kg
             </Typography>
           </CardContent>
         </Card>
@@ -94,7 +131,7 @@ export default function Dashboard() {
               Latest Height
             </Typography>
             <Typography variant="h5">
-              1.70 m
+              {lastestHeight} m
             </Typography>
           </CardContent>
         </Card>
@@ -104,7 +141,7 @@ export default function Dashboard() {
               Calories consumed
             </Typography>
             <Typography variant="h5">
-              0 cal
+              {lastestCaloriesConsumed} cal
             </Typography>
           </CardContent>
         </Card>
@@ -114,7 +151,7 @@ export default function Dashboard() {
               Fat index
             </Typography>
             <Typography variant="h5">
-              0%
+              {lastestFatIndex}%
             </Typography>
           </CardContent>
         </Card>
@@ -127,7 +164,9 @@ export default function Dashboard() {
       <br/>
       <div style={{width: '50vw'}}>
         <Bar data={data} options={options}/>
-      </div>      
+      </div>  
+      <br/>
+      <br/>    
     </Container>
   );
 }
