@@ -1,11 +1,12 @@
 import { Container } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import Slider from "./Slider";
 import DietCategory from "../../types/DietCategory";
 import DietCard from "../../../general/components/DietCard";
 import Diet from "../../../general/interfaces/Diet";
 import DietInfoCard from "../../components/DietInfoCard";
+import { URLs } from "../../../general/utils/urls";
 
 export default function DietsList(props: DietCategory) {
   const SliderProps = {
@@ -15,6 +16,7 @@ export default function DietsList(props: DietCategory) {
     pageTransition: 500, // Transition when flipping pages
   };
 
+  const [diets, setDiets] = useState<Diet[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeDiet, setActiveDiet] = useState<Diet>({} as Diet);
 
@@ -23,48 +25,23 @@ export default function DietsList(props: DietCategory) {
     setActiveDiet(diet);
   };
 
-  const diets: Diet[] = [
-    {
-      name: "diet1",
-      description: "Some nice description for a diet. blah blah banana banana",
-    },
-    {
-      name: "diet2",
-      description: "Some nice description for a diet. blah blah banana banana",
-    },
-    {
-      name: "diet3",
-      description: "Some nice description for a diet. blah blah banana banana",
-    },
-    {
-      name: "diet4",
-      description: "Some nice description for a diet. blah blah banana banana",
-    },
-    {
-      name: "diet5",
-      description: "Some nice description for a diet. blah blah banana banana",
-    },
-    {
-      name: "diet6",
-      description: "Some nice description for a diet. blah blah banana banana",
-    },
-    {
-      name: "diet7",
-      description: "Some nice description for a diet. blah blah banana banana",
-    },
-    {
-      name: "diet8",
-      description: "Some nice description for a diet. blah blah banana banana",
-    },
-    {
-      name: "diet9",
-      description: "Some nice description for a diet. blah blah banana banana",
-    },
-    {
-      name: "diet10",
-      description: "Some nice description for a diet. blah blah banana banana",
-    },
-  ];
+  useEffect(() => {
+    async function fetchAPI() {
+      let response = await fetch(
+        URLs.diet + `?Page=1&PageSize=100&categoryIds=${props.id}`
+      );
+      let data = await response.json();
+      let list: Diet[] = [];
+      for (const short_diet of data.pagination) {
+        const response = await fetch(URLs.diet + `/${short_diet.id}`);
+        const data = await response.json();
+        data.id = short_diet.id;
+        list.push(data);
+      }
+      setDiets(list);
+    }
+    fetchAPI();
+  }, []);
 
   return (
     <Container maxWidth="xl">
@@ -74,7 +51,7 @@ export default function DietsList(props: DietCategory) {
       </Dialog>
       <Slider {...SliderProps}>
         {diets.map((diet) => (
-          <div onClick={() => handleDialogOpen(diet)}>
+          <div key={diet.id} onClick={() => handleDialogOpen(diet)}>
             <DietCard {...diet} />
           </div>
         ))}

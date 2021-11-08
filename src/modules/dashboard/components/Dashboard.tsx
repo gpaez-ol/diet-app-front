@@ -48,13 +48,14 @@ export default function Dashboard() {
     }
   });
 
-  let diets: Diet[] = [
-    {name: "nose", description: "description"},
-    {name: "nose1", description: "description"},
-    {name: "nose2", description: "description"},
-    {name: "nose3", description: "description"},
-    {name: "nose4", description: "description"}
-  ];
+  const [diets, setDiets] = useState<Diet[]>([]);
+  // let diets: Diet[] = [
+  //   {name: "nose", description: "description"},
+  //   {name: "nose1", description: "description"},
+  //   {name: "nose2", description: "description"},
+  //   {name: "nose3", description: "description"},
+  //   {name: "nose4", description: "description"}
+  // ];
 
   useEffect(() => {
     const requestOptions = {
