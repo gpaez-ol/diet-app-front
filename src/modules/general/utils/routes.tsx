@@ -4,5 +4,6 @@ export const Routes = {
   customerDashboard: "/dashboard",
   customerBrowse: "/browse",
   account: "/account",
+  help: "/help",
   adminConfigurator: "/admin/configurator",
 };

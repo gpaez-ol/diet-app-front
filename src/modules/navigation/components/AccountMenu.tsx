@@ -25,9 +25,21 @@ export default function AccountMenu(user: User) {
   };
 
   const browserHistory = useHistory();
+
   const handleLogout = () => {
     localStorage.removeItem("user");
     browserHistory.push(Routes.customerBrowse);
+    window.location.reload()
+  };
+
+  const account = () => {
+    browserHistory.push("/account");
+    window.location.reload()
+  };
+
+  
+  const help = () => {
+    browserHistory.push("/help");
     window.location.reload()
   };
 
@@ -77,7 +89,7 @@ export default function AccountMenu(user: User) {
         <MenuItem>
           <Avatar /> General information
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={account}>
           <Avatar /> My account
         </MenuItem>
         <Divider />
@@ -87,7 +99,7 @@ export default function AccountMenu(user: User) {
           </ListItemIcon>
           Preferences
         </MenuItem>
-        <MenuItem>
+        <MenuItem  onClick={help}>
           <ListItemIcon>
             <HelpIcon fontSize="small" />
           </ListItemIcon>
