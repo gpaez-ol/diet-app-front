@@ -6,4 +6,5 @@ export const Routes = {
   account: "/account",
   help: "/help",
   adminConfigurator: "/admin/configurator",
+  diets: "/diets",
 };
