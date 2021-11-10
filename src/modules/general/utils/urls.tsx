@@ -7,4 +7,5 @@ export const URLs = {
   category: baseUrl + "/category",
   diet: baseUrl + "/diet",
   dashboard: baseUrl + "/dashboard",
+  meal: baseUrl + "/meal",
 };
