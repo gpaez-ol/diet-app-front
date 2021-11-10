@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -7,44 +8,46 @@ import { useLocation } from "react-router-dom";
 import CardMedia from "@mui/material/CardMedia";
 import Diet from "../../general/interfaces/Diet";
 import { URLs } from "../../general/utils/urls";
-import { Category } from "../../general/types/Category";
 
 export default function DietPage() {
   const dietId = useLocation().pathname.split("/")[2];
 
   const [diet, setDiet] = useState<Diet>();
-  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    async function fetchAPI() {
-      let response = await fetch(URLs.diet + `/${dietId}`);
-      let data = await response.json();
-      data.id = dietId;
-      setDiet(data);
-      let catArr: Category[] = [];
-      for (const categoryId of data.categories) {
-        const response = await fetch(URLs.category + `/${categoryId}`);
-        const data = await response.json();
-        catArr.push(data);
-      }
-      setCategories(catArr);
-    }
-    fetchAPI();
+    fetch(URLs.diet + `/${dietId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        data.id = dietId;
+        setDiet(data);
+      });
   }, []);
 
   return (
     <Container maxWidth="xl">
       <CardMedia component="img" height="194" image={diet?.imageRef} />
-      <Typography variant="h2" gutterBottom component="div">
+      <Typography variant="h2" component="div">
         {diet?.name}
       </Typography>
-      <Stack direction="row" spacing={1}>
-        {categories.map((category) => {
-          return <Chip label={category.name} variant="outlined" />;
-        })}
-      </Stack>
+      <Box sx={{ mb: 1 }}>
+        <Stack direction="row" spacing={1}>
+          {diet?.categories.map((category) => {
+            return (
+              <Chip
+                key={category.id}
+                label={category.name}
+                variant="outlined"
+              />
+            );
+          })}
+        </Stack>
+      </Box>
+
       <Typography variant="body1" gutterBottom>
         {diet?.description}
+      </Typography>
+      <Typography variant="h4" gutterBottom component="div">
+        Diet meals
       </Typography>
     </Container>
   );
