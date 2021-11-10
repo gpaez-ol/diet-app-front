@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Container, Box, Tabs, Tab, Typography } from "@mui/material";
 import Ingredients from "./Ingredients/Ingredients";
+import Meals from "./Meals/Meals";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -61,7 +62,7 @@ export default function Configurator() {
           <Ingredients />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Meals
+          <Meals />
         </TabPanel>
         <TabPanel value={value} index={2}>
           Diets
