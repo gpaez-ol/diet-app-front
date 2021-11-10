@@ -81,10 +81,7 @@ export default function Ingredients() {
                   </IconButton>
                 }
               >
-                <ListItemText
-                  primary={ingredient.name}
-                  secondary={ingredient.id}
-                />
+                <ListItemText primary={ingredient.name} />
               </ListItem>
             );
           })}
