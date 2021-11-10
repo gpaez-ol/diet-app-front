@@ -11,12 +11,21 @@ import { Bar } from 'react-chartjs-2';
 import { URLs } from "../../general/utils/urls";
 import Dialog from "@mui/material/Dialog";
 import AddBiometric from './AddBiometric';
+import Slider from "../../general/components/Slider";
+import DietInfoCard from "../../general/components/DietInfoCard";
 
 interface Biometric {
   date: string;
   height: number;
   weight: number;
 }
+
+const SliderProps = {
+  zoomFactor: 30, // How much the image should zoom on hover in percent
+  slideMargin: 10, // Margin on each side of slides
+  maxVisibleSlides: 5,
+  pageTransition: 500, // Transition when flipping pages
+};
 
 export default function Dashboard() {
 
@@ -25,6 +34,14 @@ export default function Dashboard() {
   const [lastestHeight, setLastestHeight] = useState(0);
   const [lastestCaloriesConsumed, setLastestCaloriesConsumed] = useState(0);
   const [lastestFatIndex, setLastestFatIndex] = useState(0);
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [activeDiet, setActiveDiet] = useState<Diet>({} as Diet);
+
+  const handleDialogOpen = (diet: Diet) => {
+    setIsDialogOpen(true);
+    setActiveDiet(diet);
+  };
 
   const [data, setData] = useState({
     labels: [],
@@ -67,11 +84,12 @@ export default function Dashboard() {
     fetch(`${URLs.dashboard}/${userId}`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setLastestWeight(data.latestBiometrics.weight);
-        setLastestHeight(data.latestBiometrics.height);
-        setLastestCaloriesConsumed(data.latestBiometrics.caloriesConsumed);
-        setLastestFatIndex(data.latestBiometrics.fatIndex);
+        if(data.latestBiometrics !== null) {
+          setLastestWeight(data.latestBiometrics.weight);
+          setLastestHeight(data.latestBiometrics.height);
+          setLastestCaloriesConsumed(data.latestBiometrics.caloriesConsumed);
+          setLastestFatIndex(data.latestBiometrics.fatIndex);
+        }
         let dates = data.biometricHistory.map((bio: Biometric) => bio.date.substring(0, 10));
         let weights = data.biometricHistory.map((bio: Biometric) => bio.weight);
         setData({
@@ -101,19 +119,17 @@ export default function Dashboard() {
   return (
     <Container maxWidth="lg" style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
       <Typography variant="h3" style={{margin: '10px'}}> Dashboard </Typography>
-      <Card>
-        <CardHeader title="My diets"/>
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-          {
-            diets.map(diet => {
-              return <DietCard {...diet} />
-            })
-          }
-        </div>
-        <CardActions style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
-          <Button variant="contained"> See more </Button>
-        </CardActions>
-      </Card>
+      <h2>My diets</h2>
+      <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
+        <DietInfoCard {...activeDiet} />
+      </Dialog>
+      <Slider {...SliderProps}>
+        {diets.map((diet) => (
+          <div key={diet.id} onClick={() => handleDialogOpen(diet)}>
+            <DietCard {...diet} />
+          </div>
+        ))}
+      </Slider>
       <br/>
       <div style={{display: 'flex'}}>
         <Card sx={{ maxWidth: 345, minWidth: 200 }} style={{margin: '10px'}}>
