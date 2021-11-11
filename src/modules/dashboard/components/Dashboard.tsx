@@ -9,7 +9,6 @@ import { Bar } from 'react-chartjs-2';
 import { URLs } from "../../general/utils/urls";
 import Dialog from "@mui/material/Dialog";
 import AddBiometric from './AddBiometric';
-import Slider from "../../general/components/Slider";
 import DietInfoCard from "../../general/components/DietInfoCard";
 
 interface Biometric {
@@ -36,9 +35,11 @@ export default function Dashboard() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeDiet, setActiveDiet] = useState<Diet>({} as Diet);
 
-  const handleDialogOpen = (diet: Diet) => {
-    setIsDialogOpen(true);
-    setActiveDiet(diet);
+  function handleDialogOpen() {
+    if(diet){
+      setIsDialogOpen(true);
+      setActiveDiet(diet!);
+    }
   };
 
   const [data, setData] = useState({
@@ -63,14 +64,7 @@ export default function Dashboard() {
     }
   });
 
-  const [diets, setDiets] = useState<Diet[]>([]);
-  // let diets: Diet[] = [
-  //   {name: "nose", description: "description"},
-  //   {name: "nose1", description: "description"},
-  //   {name: "nose2", description: "description"},
-  //   {name: "nose3", description: "description"},
-  //   {name: "nose4", description: "description"}
-  // ];
+  const [diet, setDiet] = useState<Diet>();
 
   useEffect(() => {
     const requestOptions = {
@@ -78,6 +72,7 @@ export default function Dashboard() {
       headers: { "Content-Type": "application/json" },
     };
     let userId = JSON.parse(localStorage.getItem("user")!).id;
+    let dietId = JSON.parse(localStorage.getItem("user")!).dietId;
 
     fetch(`${URLs.dashboard}/${userId}`, requestOptions)
       .then((response) => response.json())
@@ -111,22 +106,28 @@ export default function Dashboard() {
           }
         })
       });
+
+      fetch(`${URLs.diet}/${dietId}`, requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status !== 400) setDiet(data);
+          console.log(data);
+        });
   }, [options]);
 
   return (
     <Container maxWidth="lg" style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
       <Typography variant="h3" style={{margin: '10px'}}> Dashboard </Typography>
-      <h2>My diets</h2>
+      <h2>My diet</h2>
       <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
         <DietInfoCard {...activeDiet} />
       </Dialog>
-      <Slider {...SliderProps}>
-        {diets.map((diet) => (
-          <div key={diet.id} onClick={() => handleDialogOpen(diet)}>
-            <DietCard {...diet} />
-          </div>
-        ))}
-      </Slider>
+      <div onClick={() => handleDialogOpen()}>
+        {diet ?
+          <DietCard {...diet!} />
+          : <p>You currently don't have a diet selected.</p>
+        }
+      </div>
       <br/>
       <div style={{display: 'flex'}}>
         <Card sx={{ maxWidth: 345, minWidth: 200 }} style={{margin: '10px'}}>
