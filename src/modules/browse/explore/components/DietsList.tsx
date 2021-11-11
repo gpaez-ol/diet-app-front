@@ -1,11 +1,11 @@
 import { Container } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
-import Slider from "./Slider";
+import Slider from "../../../general/components/Slider";
 import DietCategory from "../../types/DietCategory";
 import DietCard from "../../../general/components/DietCard";
 import Diet from "../../../general/interfaces/Diet";
-import DietInfoCard from "../../components/DietInfoCard";
+import DietInfoCard from "../../../general/components/DietInfoCard";
 import { URLs } from "../../../general/utils/urls";
 
 export default function DietsList(props: DietCategory) {
@@ -41,7 +41,7 @@ export default function DietsList(props: DietCategory) {
       setDiets(list);
     }
     fetchAPI();
-  }, []);
+  }, [props.id]);
 
   return (
     <Container maxWidth="xl">

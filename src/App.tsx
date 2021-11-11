@@ -6,6 +6,9 @@ import Browse from "./modules/browse/components/Browse";
 import Dashboard from "./modules/dashboard/components/Dashboard";
 import { Routes } from "./modules/general/utils/routes";
 import AppBar from "./modules/navigation/components/AppBar";
+import Account from "./modules/account/components/Account";
+import Help from "./modules/help/components/Help";
+import DietPage from "./modules/diets/components/DietPage";
 
 export default function App() {
   return (
@@ -26,9 +29,21 @@ export default function App() {
             <AppBar />
             <Configurator />
           </Route>
+          <Route path={Routes.account} exact>
+            <AppBar />
+            <Account />
+          </Route>
+          <Route path={Routes.help} exact>
+            <AppBar />
+            <Help />
+          </Route>
           <Route path={Routes.customerDashboard} exact>
             <AppBar />
             <Dashboard />
+          </Route>
+          <Route path={Routes.diets}>
+            <AppBar />
+            <DietPage />
           </Route>
         </Switch>
       </div>

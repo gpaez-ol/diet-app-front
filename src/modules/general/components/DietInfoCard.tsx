@@ -7,15 +7,19 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import Diet from "../../general/interfaces/Diet";
-import MealsList from "./MealsList";
+import MealsList from "../../browse/components/MealsList";
 
 export default function DietInfoCard(diet: Diet) {
+  const handleSeeMore = () => {
+    console.log('here')
+  }
+
   return (
     <Card style={{ overflow: "auto" }}>
       <CardMedia component="img" height="140" image={diet.imageRef} />
       <CardContent>
         <Stack spacing={2} direction="row">
-          <Button size="small">View more</Button>
+          <Button size="small" onClick={handleSeeMore}>View more</Button>
           <Button size="small" color="secondary">
             Add to "My Diet"
           </Button>
@@ -32,7 +36,7 @@ export default function DietInfoCard(diet: Diet) {
         </Typography>
         <Stack direction="row" spacing={1}>
           {diet.categories.map((category) => {
-            return <Chip label={category} variant="outlined" />;
+            return <Chip key={category.id} label={category.name} variant="outlined" />;
           })}
         </Stack>
         <Typography variant="h6" component="div">

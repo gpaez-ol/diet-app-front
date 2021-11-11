@@ -1,16 +1,11 @@
 import { Container, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
-import DietCard from '../../general/components/DietCard';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Diet from '../../general/interfaces/Diet';
 import { Bar } from 'react-chartjs-2';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import { useEffect, useState } from "react";
 import { URLs } from "../../general/utils/urls";
-import Dialog from "@mui/material/Dialog";
-import AddBiometric from './AddBiometric';
-import Slider from "../../general/components/Slider";
-import DietInfoCard from "../../general/components/DietInfoCard";
 
 interface Biometric {
   date: string;
@@ -18,28 +13,11 @@ interface Biometric {
   weight: number;
 }
 
-const SliderProps = {
-  zoomFactor: 30, // How much the image should zoom on hover in percent
-  slideMargin: 10, // Margin on each side of slides
-  maxVisibleSlides: 5,
-  pageTransition: 500, // Transition when flipping pages
-};
-
-export default function Dashboard() {
-
-  const [addBiometricOpen, setAddBiometricOpen] = useState(false);
+export default function Account() {
   const [lastestWeight, setLastestWeight] = useState(0);
   const [lastestHeight, setLastestHeight] = useState(0);
   const [lastestCaloriesConsumed, setLastestCaloriesConsumed] = useState(0);
   const [lastestFatIndex, setLastestFatIndex] = useState(0);
-
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [activeDiet, setActiveDiet] = useState<Diet>({} as Diet);
-
-  const handleDialogOpen = (diet: Diet) => {
-    setIsDialogOpen(true);
-    setActiveDiet(diet);
-  };
 
   const [data, setData] = useState({
     labels: [],
@@ -63,14 +41,8 @@ export default function Dashboard() {
     }
   });
 
-  const [diets, setDiets] = useState<Diet[]>([]);
-  // let diets: Diet[] = [
-  //   {name: "nose", description: "description"},
-  //   {name: "nose1", description: "description"},
-  //   {name: "nose2", description: "description"},
-  //   {name: "nose3", description: "description"},
-  //   {name: "nose4", description: "description"}
-  // ];
+  let firstName = JSON.parse(localStorage.getItem("user")!).firstName;
+  let lastName = JSON.parse(localStorage.getItem("user")!).lastName;
 
   useEffect(() => {
     const requestOptions = {
@@ -79,15 +51,14 @@ export default function Dashboard() {
     };
     let userId = JSON.parse(localStorage.getItem("user")!).id;
 
+
     fetch(`${URLs.dashboard}/${userId}`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        if(data.latestBiometrics !== null) {
-          setLastestWeight(data.latestBiometrics.weight);
-          setLastestHeight(data.latestBiometrics.height);
-          setLastestCaloriesConsumed(data.latestBiometrics.caloriesConsumed);
-          setLastestFatIndex(data.latestBiometrics.fatIndex);
-        }
+        setLastestWeight(data.latestBiometrics.weight);
+        setLastestHeight(data.latestBiometrics.height);
+        setLastestCaloriesConsumed(data.latestBiometrics.caloriesConsumed);
+        setLastestFatIndex(data.latestBiometrics.fatIndex);
         let dates = data.biometricHistory.map((bio: Biometric) => bio.date.substring(0, 10));
         let weights = data.biometricHistory.map((bio: Biometric) => bio.weight);
         setData({
@@ -115,19 +86,14 @@ export default function Dashboard() {
 
   return (
     <Container maxWidth="lg" style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
-      <Typography variant="h3" style={{margin: '10px'}}> Dashboard </Typography>
-      <h2>My diets</h2>
-      <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
-        <DietInfoCard {...activeDiet} />
-      </Dialog>
-      <Slider {...SliderProps}>
-        {diets.map((diet) => (
-          <div key={diet.id} onClick={() => handleDialogOpen(diet)}>
-            <DietCard {...diet} />
-          </div>
-        ))}
-      </Slider>
-      <br/>
+
+    <Stack direction="row" spacing={2}>
+      <Avatar src="" style={{margin: '15px'}} />
+      <Typography variant="h3" style={{margin: '10px'}}> {firstName} {lastName} </Typography>
+    </Stack>
+
+    <br/>
+    
       <div style={{display: 'flex'}}>
         <Card sx={{ maxWidth: 345, minWidth: 200 }} style={{margin: '10px'}}>
           <CardContent>
@@ -171,10 +137,6 @@ export default function Dashboard() {
         </Card>
       </div>
       <br/>
-      <Button onClick={() => setAddBiometricOpen(true)}>Add Biometrics</Button>
-      <Dialog onClose={() => setAddBiometricOpen(false)} open={addBiometricOpen}>
-        <AddBiometric close={() => setAddBiometricOpen(false)}/>
-      </Dialog>
       <br/>
       <div style={{width: '50vw'}}>
         <Bar data={data} options={options}/>
