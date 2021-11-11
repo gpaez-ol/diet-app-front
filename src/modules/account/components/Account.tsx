@@ -55,7 +55,6 @@ export default function Account() {
     fetch(`${URLs.dashboard}/${userId}`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setLastestWeight(data.latestBiometrics.weight);
         setLastestHeight(data.latestBiometrics.height);
         setLastestCaloriesConsumed(data.latestBiometrics.caloriesConsumed);
@@ -82,9 +81,8 @@ export default function Account() {
             }
           }
         })
-        console.log(options);
       });
-  }, []);
+  }, [options]);
 
   return (
     <Container maxWidth="lg" style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>

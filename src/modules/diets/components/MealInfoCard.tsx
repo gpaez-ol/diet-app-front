@@ -43,7 +43,7 @@ export default function MealInfoCard(props: { mealId: string }) {
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         >
-          {meal?.ingredients.map((ingredient, index) => {
+          {meal?.mealIngredients.map((ingredient, index) => {
             const primaryText = `${ingredient.amount} x ${ingredient.name}`;
             return (
               <ListItem key={ingredient.ingredientId}>

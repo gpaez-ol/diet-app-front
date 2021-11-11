@@ -59,18 +59,6 @@ export default function SignupForm() {
       }),
     };
 
-    console.log(
-      JSON.stringify({
-        firstName,
-        lastName,
-        phone,
-        email,
-        confirmEmail,
-        password,
-        confirmPassword,
-      })
-    );
-
     fetch(URLs.signup, requestOptions)
       .then((response) => response.json())
       .then((data) => {

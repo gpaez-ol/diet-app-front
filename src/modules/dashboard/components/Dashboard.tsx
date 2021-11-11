@@ -1,5 +1,5 @@
 import { Container, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import DietCard from '../../general/components/DietCard';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -105,7 +105,6 @@ export default function Dashboard() {
             }
           }
         })
-        console.log(options);
       });
 
       fetch(`${URLs.diet}/${dietId}`, requestOptions)
@@ -114,7 +113,7 @@ export default function Dashboard() {
           if(data.status !== 400) setDiet(data);
           console.log(data);
         });
-  }, []);
+  }, [options]);
 
   return (
     <Container maxWidth="lg" style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
