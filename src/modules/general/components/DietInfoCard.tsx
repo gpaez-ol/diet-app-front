@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import Diet from "../../general/interfaces/Diet";
-import MealsList from "../../browse/components/MealsList";
+import MealsList from "./MealsList";
 import { Routes } from "../../general/utils/routes";
 
 export default function DietInfoCard(diet: Diet) {
