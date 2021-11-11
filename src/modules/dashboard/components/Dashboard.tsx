@@ -133,13 +133,16 @@ export default function Dashboard() {
       <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
         <DietInfoCard {...activeDiet} />
       </Dialog>
-      <div onClick={() => handleDialogOpen()}>
-        {diet ? (
-          <DietCard {...diet!} />
-        ) : (
-          <p>You currently don't have a diet selected.</p>
-        )}
-      </div>
+      {diet ? (
+        <>
+          <div onClick={() => handleDialogOpen()}>
+            <DietCard {...diet!} />
+          </div>
+          <Button href="/supermarketList">See supermarket list</Button>
+        </>
+      ) : (
+        <p>You currently don't have a diet selected.</p>
+      )}
       <br />
       <div style={{ display: "flex" }}>
         <Card sx={{ maxWidth: 345, minWidth: 200 }} style={{ margin: "10px" }}>
