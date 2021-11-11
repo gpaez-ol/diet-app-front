@@ -4,7 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
 import Grid from "@mui/material/Grid";
 import DietCard from "../../../general/components/DietCard";
-import Diet from "../../../general/interfaces/Diet";
+import {Diet} from "../../../general/types/diet";
 import DietInfoCard from "../../../general/components/DietInfoCard";
 import SearchResultProps from "../interfaces/SearchResultProps";
 import { URLs } from "../../../general/utils/urls";

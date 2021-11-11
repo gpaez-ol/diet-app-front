@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Box, Tabs, Tab, Typography } from "@mui/material";
 import Ingredients from "./Ingredients/Ingredients";
 import Meals from "./Meals/Meals";
+import Diets from "./Diets/Diets";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -65,7 +66,7 @@ export default function Configurator() {
           <Meals />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Diets
+          <Diets />
         </TabPanel>
       </Box>
     </Container>

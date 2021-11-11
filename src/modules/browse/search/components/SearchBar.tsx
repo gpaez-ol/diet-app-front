@@ -7,7 +7,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Grid from "@mui/material/Grid";
 import SearchBarProps from "../interfaces/SearchBarProps";
-import DietCategory from "../../types/DietCategory";
+import { DietCategory } from "../../types/DietCategory";
 import { URLs } from "../../../general/utils/urls";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;

@@ -4,7 +4,7 @@ import DietCard from "../../general/components/DietCard";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Diet from "../../general/interfaces/Diet";
+import { Diet } from "../../general/types/diet";
 import { Bar } from "react-chartjs-2";
 import { URLs } from "../../general/utils/urls";
 import Dialog from "@mui/material/Dialog";
