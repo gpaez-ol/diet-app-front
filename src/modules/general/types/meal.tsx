@@ -5,7 +5,7 @@ export interface Meal {
   name: string;
   kilocalories: number;
   preparation: string;
-  ingredients: MealIngredient[];
+  mealIngredients: MealIngredient[];
 }
 
 export interface MealResponse {

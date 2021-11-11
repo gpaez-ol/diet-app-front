@@ -1,10 +1,8 @@
 import { Container, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import DietCard from '../../general/components/DietCard';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Diet from '../../general/interfaces/Diet';
 import { Bar } from 'react-chartjs-2';
@@ -114,7 +112,7 @@ export default function Dashboard() {
         })
         console.log(options);
       });
-  }, []);
+  }, [options]);
 
   return (
     <Container maxWidth="lg" style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>

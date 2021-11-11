@@ -12,7 +12,14 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Meal } from "../../../general/types/meal";
-import { getMeals, Maybe, updateMeal } from "../../../general/utils/utils";
+import {
+  createMeal,
+  deleteMeal,
+  getIngredient,
+  getMeals,
+  Maybe,
+  updateMeal,
+} from "../../../general/utils/utils";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -38,12 +45,37 @@ export default function Meals() {
   const [isAddingIngredient, setIsAddingIngredient] = React.useState(false);
   const [currentMealIngredients, setCurrentMealIngredients] =
     React.useState<Maybe<MealIngredient[]>>(null);
+  const [isFetching, setIsFetching] = React.useState(false);
 
   const loadMeals = async () => {
     const meals = await getMeals();
-    console.log("MEALS", meals);
     setMeals(meals);
   };
+
+  const fetchIngredientsNames = async () => {
+    if (currentMealIngredients) {
+      setIsFetching(true);
+      Promise.all(
+        currentMealIngredients.map(async (currentIngredient) => {
+          let ingredient = await getIngredient(currentIngredient.ingredientId);
+          return {
+            ...currentIngredient,
+            name: ingredient.name,
+          };
+        })
+      ).then((newIngredients) => {
+        if (newIngredients) {
+          console.log("new ingredients", newIngredients);
+          setCurrentMealIngredients(newIngredients);
+          setIsFetching(false);
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    !isFetching && fetchIngredientsNames();
+  }, [isFetching, currentMealIngredients, fetchIngredientsNames]);
 
   useEffect(() => {
     loadMeals();
@@ -54,9 +86,25 @@ export default function Meals() {
       meal.name &&
       meal.kilocalories &&
       meal.preparation &&
-      meal.ingredients &&
-      meal.ingredients.length > 0
+      meal.mealIngredients &&
+      meal.mealIngredients.length > 0
     );
+  };
+
+  const handleDeleteMeal = async () => {
+    if (!newMeal || !newMeal.id) {
+      return;
+    }
+
+    const success = await deleteMeal(newMeal.id);
+
+    if (success) {
+      setIsEditing(false);
+      setNewMeal(null);
+      window.location.reload();
+    } else {
+      alert("Couldn't delete meal. Please try again later.");
+    }
   };
 
   const handleMealSave = async () => {
@@ -75,16 +123,35 @@ export default function Meals() {
       if (success) {
         setIsEditing(false);
         setNewMeal(null);
+        window.location.reload();
       } else {
         alert("Couldn't save meal. Please try again later.");
       }
     } else {
-      //
+      const success = await createMeal(newMeal);
+      if (success) {
+        setNewMeal(null);
+        window.location.reload();
+      } else {
+        alert("Couldn't create meal. Please try again later.");
+      }
     }
   };
 
   return (
     <>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button
+          variant="contained"
+          onClick={() =>
+            setNewMeal({
+              name: "",
+            })
+          }
+        >
+          New meal
+        </Button>
+      </Box>
       <List>
         {meals &&
           meals.map((meal, index) => {
@@ -97,7 +164,7 @@ export default function Meals() {
                     aria-label="delete"
                     onClick={() => {
                       setIsEditing(true);
-                      setCurrentMealIngredients(meal.ingredients);
+                      setCurrentMealIngredients(meal.mealIngredients);
                       setNewMeal(meal);
                     }}
                   >
@@ -220,6 +287,10 @@ export default function Meals() {
                                 ing.ingredientId !== currentIng.ingredientId
                             );
                             setCurrentMealIngredients(filteredItems);
+                            setNewMeal({
+                              ...newMeal,
+                              mealIngredients: filteredItems!,
+                            });
                           }}
                         >
                           <DeleteIcon />
@@ -244,6 +315,16 @@ export default function Meals() {
               marginTop: "16px",
             }}
           >
+            {isEditing && (
+              <Button
+                variant="contained"
+                color="error"
+                sx={{ marginRight: "8px" }}
+                onClick={handleDeleteMeal}
+              >
+                Delete
+              </Button>
+            )}
             <Button
               variant="contained"
               sx={{ alignSelf: "flex-end" }}
@@ -276,7 +357,7 @@ export default function Meals() {
               console.log("curr ingredients", currentIngredients);
               setNewMeal({
                 ...newMeal,
-                ingredients: currentIngredients!,
+                mealIngredients: currentIngredients!,
               });
               setIsAddingIngredient(false);
             }}

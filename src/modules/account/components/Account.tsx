@@ -84,7 +84,7 @@ export default function Account() {
         })
         console.log(options);
       });
-  }, []);
+  }, [options]);
 
   return (
     <Container maxWidth="lg" style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
