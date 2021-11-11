@@ -7,4 +7,5 @@ export const Routes = {
   help: "/help",
   adminConfigurator: "/admin/configurator",
   diets: "/diets",
+  supermaketList: "/supermarketList",
 };
