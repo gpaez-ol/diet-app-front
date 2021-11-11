@@ -41,7 +41,7 @@ export default function DietsList(props: DietCategory) {
       setDiets(list);
     }
     fetchAPI();
-  }, []);
+  }, [props.id]);
 
   return (
     <Container maxWidth="xl">

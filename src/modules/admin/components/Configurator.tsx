@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container, Box, Tabs, Tab, Typography } from "@mui/material";
 import Ingredients from "./Ingredients/Ingredients";
 import Meals from "./Meals/Meals";

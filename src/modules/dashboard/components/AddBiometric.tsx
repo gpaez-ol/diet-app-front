@@ -37,11 +37,9 @@ export default function AddBiometric(props: AddBiometricProps) {
 
     fetch(`${URLs.biometric}/${userId}`, requestOptions)
       .then((response) => {
-        console.log(response);
         if(response.ok) {
           props.close();
         } else {
-          console.log("error");
           setErrorOpen(true);
         }
       });
