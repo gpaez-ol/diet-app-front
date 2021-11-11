@@ -8,7 +8,7 @@ import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
-import Diet from "../../general/interfaces/Diet";
+import { Diet } from "../types/diet";
 import MealsList from "./MealsList";
 import { Routes } from "../../general/utils/routes";
 
@@ -34,18 +34,18 @@ export default function DietInfoCard(diet: Diet) {
           {diet.description}
         </Typography>
         <Box sx={{ mb: 1 }}>
-        <Typography variant="h6" component="div">
-          Diet categories
-        </Typography>
-        <Stack direction="row" spacing={1}>
-          {diet.categories.map((category) => {
-            return (
-              <Tooltip key={category.id} title={category.description} arrow>
+          <Typography variant="h6" component="div">
+            Diet categories
+          </Typography>
+          <Stack direction="row" spacing={1}>
+            {diet.categories.map((category) => {
+              return (
+                <Tooltip key={category.id} title={category.description} arrow>
                   <Chip label={category.name} variant="outlined" />
                 </Tooltip>
-            );
-          })}
-        </Stack>
+              );
+            })}
+          </Stack>
         </Box>
         <Typography variant="h6" component="div">
           Meals in this diet

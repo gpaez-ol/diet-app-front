@@ -2,9 +2,9 @@ import { Container } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import Slider from "../../../general/components/Slider";
-import DietCategory from "../../types/DietCategory";
+import { DietCategory } from "../../types/DietCategory";
 import DietCard from "../../../general/components/DietCard";
-import Diet from "../../../general/interfaces/Diet";
+import { Diet } from "../../../general/types/diet";
 import DietInfoCard from "../../../general/components/DietInfoCard";
 import { URLs } from "../../../general/utils/urls";
 

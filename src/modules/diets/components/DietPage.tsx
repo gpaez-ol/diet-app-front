@@ -9,7 +9,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Stack from "@mui/material/Stack";
 import { useLocation } from "react-router-dom";
 import CardMedia from "@mui/material/CardMedia";
-import Diet from "../../general/interfaces/Diet";
+import { Diet } from "../../general/types/diet";
 import { URLs } from "../../general/utils/urls";
 import MealCard from "./MealCard";
 import MealInfoCard from "./MealInfoCard";
@@ -70,7 +70,7 @@ export default function DietPage() {
               {diet?.meals.map((meal, index) => {
                 return (
                   <Grid key={index} item xs={12} sm={4} md={3}>
-                    <div onClick={() => handleDialogOpen(meal.id)}>
+                    <div onClick={() => handleDialogOpen(meal.id!)}>
                       <MealCard {...meal} />
                     </div>
                   </Grid>
