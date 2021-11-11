@@ -8,4 +8,5 @@ export const URLs = {
   diet: baseUrl + "/diet",
   dashboard: baseUrl + "/dashboard",
   meal: baseUrl + "/meal",
+  user: baseUrl + "/profile",
 };
