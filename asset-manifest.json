@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/diet-app-front/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/diet-app-front/static/js/main.e9ae88b3.chunk.js",
+    "main.js.map": "/diet-app-front/static/js/main.e9ae88b3.chunk.js.map",
+    "runtime-main.js": "/diet-app-front/static/js/runtime-main.d70101e5.js",
+    "runtime-main.js.map": "/diet-app-front/static/js/runtime-main.d70101e5.js.map",
+    "static/js/2.2c3384f7.chunk.js": "/diet-app-front/static/js/2.2c3384f7.chunk.js",
+    "static/js/2.2c3384f7.chunk.js.map": "/diet-app-front/static/js/2.2c3384f7.chunk.js.map",
+    "static/js/3.86f02d58.chunk.js": "/diet-app-front/static/js/3.86f02d58.chunk.js",
+    "static/js/3.86f02d58.chunk.js.map": "/diet-app-front/static/js/3.86f02d58.chunk.js.map",
+    "index.html": "/diet-app-front/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/diet-app-front/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.2c3384f7.chunk.js.LICENSE.txt": "/diet-app-front/static/js/2.2c3384f7.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d70101e5.js",
+    "static/js/2.2c3384f7.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.e9ae88b3.chunk.js"
+  ]
+}
