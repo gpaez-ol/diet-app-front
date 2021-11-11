@@ -6,6 +6,7 @@ export interface Meal {
   kilocalories: number;
   preparation: string;
   mealIngredients: MealIngredient[];
+  imageRef: string,
 }
 
 export interface MealResponse {

@@ -65,7 +65,6 @@ export default function Meals() {
         })
       ).then((newIngredients) => {
         if (newIngredients) {
-          console.log("new ingredients", newIngredients);
           setCurrentMealIngredients(newIngredients);
           setIsFetching(false);
         }
@@ -75,7 +74,7 @@ export default function Meals() {
 
   useEffect(() => {
     !isFetching && fetchIngredientsNames();
-  }, [isFetching, currentMealIngredients, fetchIngredientsNames]);
+  }, [currentMealIngredients]);
 
   useEffect(() => {
     loadMeals();
@@ -347,7 +346,6 @@ export default function Meals() {
         <Box sx={editMealModalStyle}>
           <IngredientSelector
             onSelectIngredient={(ingredient) => {
-              console.log("ingredient", ingredient);
               let currentIngredients = currentMealIngredients;
               if (currentIngredients) {
                 currentIngredients.push(ingredient);
@@ -355,7 +353,6 @@ export default function Meals() {
                 currentIngredients = [ingredient];
               }
               setCurrentMealIngredients(currentIngredients);
-              console.log("curr ingredients", currentIngredients);
               setNewMeal({
                 ...newMeal,
                 mealIngredients: currentIngredients!,

@@ -110,7 +110,6 @@ export default function Dashboard() {
             }
           }
         })
-        console.log(options);
       });
   }, [options]);
 

@@ -85,7 +85,6 @@ export const updateMeal = async (
 ): Promise<boolean> => {
   delete newMeal.id;
   newMeal.mealIngredients?.filter((ing) => delete ing.name);
-  console.log("UPDATE MEAL", newMeal);
   try {
     await axios.put(
       "http://algofit-qa-alb-599938117.us-east-1.elb.amazonaws.com/meal/" + id,
