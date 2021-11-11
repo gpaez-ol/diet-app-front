@@ -1,6 +1,7 @@
 import { Container, Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
+import { User } from "../../general/types/user";
 import { Routes } from "../../general/utils/routes";
 import LoginForm from "./LoginForm";
 
@@ -8,9 +9,17 @@ export default function Login() {
   const browserHistory = useHistory();
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
+    const localStorageUser = localStorage.getItem("user");
+    if (!localStorageUser) {
+      return;
+    }
+    const user = JSON.parse(localStorageUser) as User;
     if (user) {
-      browserHistory.push(Routes.customerDashboard);
+      if (user.type === "Customer") {
+        browserHistory.push(Routes.customerDashboard);
+      } else {
+        browserHistory.push(Routes.adminConfigurator);
+      }
     }
   });
 
