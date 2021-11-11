@@ -44,6 +44,7 @@ export default function DietPage() {
       method: "PUT",
     });
     setUser({ ...localUser });
+    localStorage.setItem("user", JSON.stringify(localUser));
   };
 
   const getAddDietButton = () => {

@@ -42,6 +42,7 @@ export default function DietInfoCard(diet: Diet) {
       method: "PUT",
     });
     setUser({ ...localUser });
+    localStorage.setItem("user", JSON.stringify(localUser));
   };
 
   const getAddDietButton = () => {
