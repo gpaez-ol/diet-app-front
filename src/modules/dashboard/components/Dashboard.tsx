@@ -111,10 +111,14 @@ export default function Dashboard() {
     fetch(`${URLs.diet}/${dietId}`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        if (data.status !== 400) setDiet(data);
-        console.log(data);
+        if (data.status !== 400) {
+          data.id = dietId;
+          setDiet(data);
+        } else {
+          console.log(data);
+        }
       });
-  }, [options]);
+  }, []);
 
   return (
     <Container

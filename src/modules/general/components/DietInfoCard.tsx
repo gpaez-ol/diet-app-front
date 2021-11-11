@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -11,8 +11,66 @@ import { Button } from "@mui/material";
 import { Diet } from "../types/diet";
 import MealsList from "./MealsList";
 import { Routes } from "../../general/utils/routes";
+import { User } from "../../general/types/user";
+import { URLs } from "../../general/utils/urls";
+
+function isUser(user: any): user is User {
+  return user.avatar && user.firstName && user.lastName && user.type;
+}
 
 export default function DietInfoCard(diet: Diet) {
+  const [user, setUser] = useState<User | undefined>(undefined);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      if (isUser(parsedUser)) {
+        fetch(URLs.user + `/${parsedUser.id}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setUser(data);
+          });
+      }
+    }
+  }, [setUser]);
+
+  const handleAddDietClick = () => {
+    let localUser: User = user!;
+    localUser.dietId = diet.id;
+    fetch(URLs.diet + `/${diet.id}/user/${user?.id}`, {
+      method: "PUT",
+    });
+    setUser({ ...localUser });
+    localStorage.setItem("user", JSON.stringify(localUser));
+  };
+
+  const getAddDietButton = () => {
+    if (user !== undefined) {
+      if (user.dietId !== diet.id) {
+        return (
+          <Button size="small" color="secondary" onClick={handleAddDietClick}>
+            Add to "My Diet"
+          </Button>
+        );
+      } else {
+        return (
+          <Button variant="contained" color="success">
+            This is your Diet!
+          </Button>
+        );
+      }
+    } else {
+      return (
+        <Tooltip title={"Log in to add a diet"} arrow>
+          <span>
+            <Button disabled>Add to "My Diet"</Button>
+          </span>
+        </Tooltip>
+      );
+    }
+  };
+
   return (
     <Card style={{ overflow: "auto" }}>
       <CardMedia component="img" height="140" image={diet.imageRef} />
@@ -21,10 +79,7 @@ export default function DietInfoCard(diet: Diet) {
           <Button size="small" href={Routes.diets + `/${diet.id}`}>
             View more
           </Button>
-
-          <Button size="small" color="secondary">
-            Add to "My Diet"
-          </Button>
+          {getAddDietButton()}
         </Stack>
 
         <Typography gutterBottom variant="h4" component="div">
