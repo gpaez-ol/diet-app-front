@@ -40,6 +40,9 @@ export default function App() {
             <AppBar />
             <DietPage />
           </Route>
+          <Route path={"/"} exact>
+            <Login />
+          </Route>
         </Switch>
       </div>
     </Router>

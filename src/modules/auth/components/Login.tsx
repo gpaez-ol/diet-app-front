@@ -41,7 +41,8 @@ export default function Login() {
                 Don't have an account yet?
               </Typography>
               <Typography textAlign="center">
-                Sign up <a href={Routes.signup}>here</a>
+                Sign up <a href={Routes.signup}>here</a> or continue as a{" "}
+                <a href={Routes.customerBrowse}>guest</a>.
               </Typography>
             </div>
           </Grid>
