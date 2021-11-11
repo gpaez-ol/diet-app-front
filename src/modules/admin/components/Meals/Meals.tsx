@@ -53,7 +53,7 @@ export default function Meals() {
   };
 
   const fetchIngredientsNames = async () => {
-    if (currentMealIngredients) {
+    if (newMeal && currentMealIngredients) {
       setIsFetching(true);
       Promise.all(
         currentMealIngredients.map(async (currentIngredient) => {
@@ -143,11 +143,12 @@ export default function Meals() {
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
           variant="contained"
-          onClick={() =>
+          onClick={() => {
+            setCurrentMealIngredients(null);
             setNewMeal({
               name: "",
-            })
-          }
+            });
+          }}
         >
           New meal
         </Button>
@@ -184,8 +185,8 @@ export default function Meals() {
         open={Boolean(newMeal)}
         onClose={() => {
           setIsEditing(false);
-          setCurrentMealIngredients(null);
           setNewMeal(null);
+          setCurrentMealIngredients(null);
         }}
         aria-labelledby="meal-modal"
       >
