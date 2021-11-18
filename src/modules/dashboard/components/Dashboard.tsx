@@ -69,7 +69,7 @@ export default function Dashboard() {
   const addBiometric = () => {
     getData();
     setAddBiometricOpen(false);
-  }
+  };
 
   const getData = () => {
     const requestOptions = {
@@ -123,7 +123,7 @@ export default function Dashboard() {
           console.log(data);
         }
       });
-  }
+  };
 
   useEffect(() => {
     getData();
@@ -151,9 +151,14 @@ export default function Dashboard() {
         <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
           <DietInfoCard {...activeDiet} />
         </Dialog>
-        <Box onClick={() => handleDialogOpen()} sx={{ margin: "16px" }}>
+        <Box sx={{ margin: "16px" }}>
           {diet ? (
-            <DietCard {...diet!} />
+            <>
+              <div onClick={() => handleDialogOpen()}>
+                <DietCard {...diet!} />
+              </div>
+              <Button href="/supermarketList">See supermarket list</Button>
+            </>
           ) : (
             <Typography
               variant="body1"
