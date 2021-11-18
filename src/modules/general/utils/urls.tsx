@@ -9,4 +9,5 @@ export const URLs = {
   dashboard: baseUrl + "/dashboard",
   meal: baseUrl + "/meal",
   user: baseUrl + "/profile",
+  supermarketList: baseUrl + "/supermarket-list",
 };
