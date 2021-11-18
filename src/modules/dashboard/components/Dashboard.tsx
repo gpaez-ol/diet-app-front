@@ -66,7 +66,12 @@ export default function Dashboard() {
 
   const [diet, setDiet] = useState<Diet>();
 
-  useEffect(() => {
+  const addBiometric = () => {
+    getData();
+    setAddBiometricOpen(false);
+  }
+
+  const getData = () => {
     const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -118,6 +123,10 @@ export default function Dashboard() {
           console.log(data);
         }
       });
+  }
+
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
@@ -195,7 +204,7 @@ export default function Dashboard() {
         onClose={() => setAddBiometricOpen(false)}
         open={addBiometricOpen}
       >
-        <AddBiometric close={() => setAddBiometricOpen(false)} />
+        <AddBiometric close={addBiometric} />
       </Dialog>
       <br />
       <div style={{ width: "50vw" }}>
