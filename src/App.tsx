@@ -8,6 +8,7 @@ import { Routes } from "./modules/general/utils/routes";
 import AppBar from "./modules/navigation/components/AppBar";
 import Help from "./modules/help/components/Help";
 import DietPage from "./modules/diets/components/DietPage";
+import SupermarketListPage from "./modules/supermarketList/components/SupermarketListPage";
 
 export default function App() {
   return (
@@ -39,6 +40,10 @@ export default function App() {
           <Route path={Routes.diets}>
             <AppBar />
             <DietPage />
+          </Route>
+          <Route path={Routes.supermaketList}>
+            <AppBar />
+            <SupermarketListPage />
           </Route>
           <Route path={"/"} exact>
             <Login />
