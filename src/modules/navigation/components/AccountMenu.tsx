@@ -9,10 +9,10 @@ import HelpIcon from "@mui/icons-material/Help";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { User } from "../../general/types/user";
 import { Routes } from "../../general/utils/routes";
+import { Stack, Typography } from "@mui/material";
 
 export default function AccountMenu(user: User) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -29,18 +29,17 @@ export default function AccountMenu(user: User) {
   const handleLogout = () => {
     localStorage.removeItem("user");
     browserHistory.push(Routes.customerBrowse);
-    window.location.reload()
+    window.location.reload();
   };
 
   const account = () => {
     browserHistory.push("/account");
-    window.location.reload()
+    window.location.reload();
   };
 
-  
   const help = () => {
     browserHistory.push("/help");
-    window.location.reload()
+    window.location.reload();
   };
 
   return (
@@ -48,7 +47,7 @@ export default function AccountMenu(user: User) {
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Account settings">
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-            <Avatar sx={{ width: 32, height: 32 }}>{user.firstName[0]}</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }} src={user.avatar} />
           </IconButton>
         </Tooltip>
       </Box>
@@ -86,25 +85,23 @@ export default function AccountMenu(user: User) {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
-          <Avatar /> General information
-        </MenuItem>
-        <MenuItem onClick={account}>
-          <Avatar /> My account
+        <MenuItem style={{ cursor: "default" }}>
+          <Stack direction="column">
+            <Typography>
+              {user.firstName} {user.lastName}
+            </Typography>
+            <Typography variant="caption">{user.type}</Typography>
+          </Stack>
         </MenuItem>
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Preferences
-        </MenuItem>
-        <MenuItem  onClick={help}>
-          <ListItemIcon>
-            <HelpIcon fontSize="small" />
-          </ListItemIcon>
-          Help
-        </MenuItem>
+        {user.type === "Customer" && (
+          <MenuItem onClick={help}>
+            <ListItemIcon>
+              <HelpIcon fontSize="small" />
+            </ListItemIcon>
+            Help
+          </MenuItem>
+        )}
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />

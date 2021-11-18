@@ -1,4 +1,4 @@
-import DietCategory from "../../types/DietCategory";
+import { DietCategory } from "../../types/DietCategory";
 
 export default interface SerchResultProps {
   dietNameSearch: string;

@@ -1,15 +1,16 @@
-import { Container, Typography } from "@mui/material";
+import { Container, Divider, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import DietCard from "../../general/components/DietCard";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Diet from "../../general/interfaces/Diet";
+import { Diet } from "../../general/types/diet";
 import { Bar } from "react-chartjs-2";
 import { URLs } from "../../general/utils/urls";
 import Dialog from "@mui/material/Dialog";
 import AddBiometric from "./AddBiometric";
 import DietInfoCard from "../../general/components/DietInfoCard";
+import { Box } from "@mui/system";
 
 interface Biometric {
   date: string;
@@ -65,7 +66,12 @@ export default function Dashboard() {
 
   const [diet, setDiet] = useState<Diet>();
 
-  useEffect(() => {
+  const addBiometric = () => {
+    getData();
+    setAddBiometricOpen(false);
+  }
+
+  const getData = () => {
     const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -111,13 +117,16 @@ export default function Dashboard() {
     fetch(`${URLs.diet}/${dietId}`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        if (data.status !== 400) {
-          data.id = dietId;
-          setDiet(data);
+        if (data.status !== 400 && data !== "Diet Not Found") {
+          setDiet({ ...data, id: dietId });
         } else {
           console.log(data);
         }
       });
+  }
+
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
@@ -125,26 +134,38 @@ export default function Dashboard() {
       maxWidth="lg"
       style={{ display: "flex", alignItems: "center", flexDirection: "column" }}
     >
-      <Typography variant="h3" style={{ margin: "10px" }}>
+      {/* <Typography variant="h3" style={{ margin: "10px" }}>
         {" "}
         Dashboard{" "}
-      </Typography>
-      <h2>My diet</h2>
-      <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
-        <DietInfoCard {...activeDiet} />
-      </Dialog>
-      {diet ? (
-        <>
-          <div onClick={() => handleDialogOpen()}>
+      </Typography> */}
+      <Box
+        sx={{
+          margin: "32px",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h4" style={{ textAlign: "center" }}>
+          My diet
+        </Typography>
+        <Dialog onClose={() => setIsDialogOpen(false)} open={isDialogOpen}>
+          <DietInfoCard {...activeDiet} />
+        </Dialog>
+        <Box onClick={() => handleDialogOpen()} sx={{ margin: "16px" }}>
+          {diet ? (
             <DietCard {...diet!} />
-          </div>
-          <Button href="/supermarketList">See supermarket list</Button>
-        </>
-      ) : (
-        <p>You currently don't have a diet selected.</p>
-      )}
-      <br />
-      <div style={{ display: "flex" }}>
+          ) : (
+            <Typography
+              variant="body1"
+              style={{ textAlign: "center", margin: "16px" }}
+            >
+              You currently don't have a diet selected.
+            </Typography>
+          )}
+        </Box>
+        <Divider sx={{ marginTop: "32px" }} />
+      </Box>
+      <Box style={{ display: "flex" }}>
         <Card sx={{ maxWidth: 345, minWidth: 200 }} style={{ margin: "10px" }}>
           <CardContent>
             <Typography variant="h6" color="primary">
@@ -177,14 +198,13 @@ export default function Dashboard() {
             <Typography variant="h5">{lastestFatIndex}%</Typography>
           </CardContent>
         </Card>
-      </div>
-      <br />
+      </Box>
       <Button onClick={() => setAddBiometricOpen(true)}>Add Biometrics</Button>
       <Dialog
         onClose={() => setAddBiometricOpen(false)}
         open={addBiometricOpen}
       >
-        <AddBiometric close={() => setAddBiometricOpen(false)} />
+        <AddBiometric close={addBiometric} />
       </Dialog>
       <br />
       <div style={{ width: "50vw" }}>

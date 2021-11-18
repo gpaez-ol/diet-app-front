@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import SearchProps from "../interfaces/SearchProps";
-import DietCategory from "../../types/DietCategory";
+import { DietCategory } from "../../types/DietCategory";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 

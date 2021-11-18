@@ -8,7 +8,7 @@ import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
-import Diet from "../../general/interfaces/Diet";
+import { Diet } from "../types/diet";
 import MealsList from "./MealsList";
 import { Routes } from "../../general/utils/routes";
 import { User } from "../../general/types/user";

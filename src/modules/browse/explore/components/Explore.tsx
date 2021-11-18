@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import DietsList from "../../explore/components/DietsList";
-import DietCategory from "../../types/DietCategory";
+import { DietCategory } from "../../types/DietCategory";
 import { URLs } from "../../../general/utils/urls";
 
 export default function Browse() {

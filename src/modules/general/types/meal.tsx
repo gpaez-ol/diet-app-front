@@ -6,10 +6,10 @@ export interface Meal {
   kilocalories: number;
   preparation: string;
   mealIngredients: MealIngredient[];
-  imageRef: string,
+  imageRef: string;
 }
 
 export interface MealResponse {
   pagesNumber: number;
-  pagination: [Meal];
+  pagination: Meal[];
 }
